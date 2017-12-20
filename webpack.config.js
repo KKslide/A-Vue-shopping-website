@@ -22,7 +22,7 @@ module.exports = {
                 use: ["style-loader", "css-loader", "less-loader"]
             },
             {
-                test: /\.(jpg|png|gif|mp3|mp4|avi|txt|woff|ttf)$/,
+                test: /\.(jpg|png|gif|mp3|mp4|avi|txt|woff|ttf|eot|svg)$/,
                 use: [{
                     loader: "url-loader",
                     options: { limit: 10240 }
@@ -41,7 +41,7 @@ module.exports = {
     },
     devServer: {
         open: true,
-        port: 8888,
+        port: 9999,
         contentBase: 'dist'
     }
 }

@@ -9,88 +9,29 @@
                         <ul>
                             <!--此处声明下面可重复循环-->
 
-                            <li>
+                            <li v-for="item in topData.catelist" :key="item.id">
                                 <h3>
                                     <i class="iconfont icon-arrow-right"></i>
-                                    <span>手机数码</span>
+                                    <span>{{item.title}}</span>
                                     <p>
-
-                                        手机通讯 摄影摄像 存储设备
-
+                                        <span v-for="subitem in item.subitem" :key="subitem.id">
+                                            {{subitem.title}}
+                                        </span>
                                     </p>
                                 </h3>
+
+                                <!-- 鼠标悬停   展示盒子    组件中递归写法 -->
                                 <div class="item-box">
                                     <!--如有三级分类，此处可循环-->
                                     <dl>
                                         <dt>
-                                            <a href="/goods/40.html">手机数码</a>
+                                            <!-- <a href="/goods/40.html">手机数码</a> -->
+                                            <router-link :to="{ name: 'gd', params: { id: item.id } }">{{item.title}}</router-link>
                                         </dt>
                                         <dd>
-
-                                            <a href="/goods/43.html">手机通讯</a>
-
-                                            <a href="/goods/44.html">摄影摄像</a>
-
-                                            <a href="/goods/45.html">存储设备</a>
-
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </li>
-
-                            <li>
-                                <h3>
-                                    <i class="iconfont icon-arrow-right"></i>
-                                    <span>电脑办公</span>
-                                    <p>
-
-                                        电脑整机 外设产品 办公打印
-
-                                    </p>
-                                </h3>
-                                <div class="item-box">
-                                    <!--如有三级分类，此处可循环-->
-                                    <dl>
-                                        <dt>
-                                            <a href="/goods/41.html">电脑办公</a>
-                                        </dt>
-                                        <dd>
-
-                                            <a href="/goods/46.html">电脑整机</a>
-
-                                            <a href="/goods/47.html">外设产品</a>
-
-                                            <a href="/goods/48.html">办公打印</a>
-
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </li>
-
-                            <li>
-                                <h3>
-                                    <i class="iconfont icon-arrow-right"></i>
-                                    <span>影音娱乐</span>
-                                    <p>
-
-                                        平板电视 音响DVD 影音配件
-
-                                    </p>
-                                </h3>
-                                <div class="item-box">
-                                    <!--如有三级分类，此处可循环-->
-                                    <dl>
-                                        <dt>
-                                            <a href="/goods/42.html">影音娱乐</a>
-                                        </dt>
-                                        <dd>
-
-                                            <a href="/goods/49.html">平板电视</a>
-
-                                            <a href="/goods/50.html">音响DVD</a>
-
-                                            <a href="/goods/51.html">影音配件</a>
-
+                                            <!-- 向子组件传递参数 -->
+                                            <app-menu :menu="item.subcates"></app-menu>
+                                            
                                         </dd>
                                     </dl>
                                 </div>
@@ -104,28 +45,14 @@
                 <!--幻灯片-->
                 <div class="left-705">
                     <div class="banner-img">
-                        <div id="focus-box" class="focus-box">
-                            <ul class="slides">
-                                <li class="" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
-                                    <a href="/goods.html">
-                                        <img src="/templates/main/images/focus_1.png" draggable="false">
-                                    </a>
-                                </li>
-                                <li style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;" class="flex-active-slide">
-                                    <a href="/goods.html">
-                                        <img src="/templates/main/images/focus_2.png" draggable="false">
-                                    </a>
-                                </li>
-                            </ul>
-                            <ol class="flex-control-nav flex-control-paging">
-                                <li>
-                                    <a class="">1</a>
-                                </li>
-                                <li>
-                                    <a class="flex-active">2</a>
-                                </li>
-                            </ol>
-                        </div>
+                        <!-- 这里用饿了么轮播图 -->
+
+                        <el-carousel indicator-position="outside">
+                            <el-carousel-item v-for="item in topData.sliderlist" :key="item.id">
+                                <!-- <h3>{{ item }}</h3> -->
+                                <img :src="item.img_url" alt="">
+                            </el-carousel-item>
+                        </el-carousel>
 
                     </div>
                 </div>
@@ -135,47 +62,15 @@
                 <div class="left-220">
                     <ul class="side-img-list">
 
-                        <li>
+                        <li v-for="item in topData.toplist" :key="item.id">
                             <div class="img-box">
                                 <label>1</label>
-                                <img src="/upload/201504/20/thumb_201504200314272543.jpg">
+                                <img :src="item.img_url">
                             </div>
                             <div class="txt-box">
-                                <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a>
-                                <span>2015-04-20</span>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="img-box">
-                                <label>2</label>
-                                <img src="/upload/201504/20/thumb_201504200258403759.jpg">
-                            </div>
-                            <div class="txt-box">
-                                <a href="/goods/show-97.html">三星（SAMSUNG）UA40HU5920JXXZ 40英寸4K超高清</a>
-                                <span>2015-04-20</span>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="img-box">
-                                <label>3</label>
-                                <img src="/upload/201504/20/thumb_201504200242250674.jpg">
-                            </div>
-                            <div class="txt-box">
-                                <a href="/goods/show-95.html">惠普（HP）LaserJet 2035商用黑白激光打印机（黑色）</a>
-                                <span>2015-04-20</span>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="img-box">
-                                <label>4</label>
-                                <img src="/upload/201504/20/thumb_201504200239192345.jpg">
-                            </div>
-                            <div class="txt-box">
-                                <a href="/goods/show-94.html">金士顿（Kingston） DataTraveler SE9 32GB 金属U盘</a>
-                                <span>2015-04-20</span>
+                                <!-- <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a> -->
+                                <router-link :to="{ name: 'gd', params: { id: item.id } }">{{item.title}}</router-link>
+                                <span>{{item.add_time | date }}</span>
                             </div>
                         </li>
 
@@ -188,9 +83,59 @@
 </template>
 
 <script>
-export default {};
+/* 导入组件 */
+import MenuComponent from './Menu.vue';
+
+export default {
+    data() {
+        return {
+            topData: {
+                /* 分类列表 */
+                catelist: [],
+                /* 轮播图数据 */
+                sliderlist: [],
+                /* 置顶数据 */
+                toplist: []
+            }
+        }
+    },
+    methods: {
+        getTopData() {
+            this.$http.get(this.$api.goodsTop).then(res => {
+                // console.log(res);
+                this.topData = res.data.message;
+            });
+        }
+    },
+    created() {
+        this.getTopData();
+    },
+    /* 注册组件 */
+    components: {
+        appMenu:MenuComponent
+    }
+};
 </script>
 
 <style scoped>
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+}
 
+.el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+}
+
+.banner-img img {
+    width: 100%;
+    height: 100%;
+}
 </style>

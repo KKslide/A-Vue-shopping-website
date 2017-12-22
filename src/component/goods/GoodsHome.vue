@@ -2,7 +2,7 @@
     <div>
         <app-bread></app-bread>
         <app-top></app-top>
-         <app-list></app-list> 
+         <app-list></app-list>
     </div>
 </template>
 

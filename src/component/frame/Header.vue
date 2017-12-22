@@ -12,21 +12,22 @@
                     <a href="/register.html">注册</a>
                     <strong>|</strong>
                     <!--<a href="/content/contact.html"><i class="iconfont icon-phone"></i>联系我们</a>
-                               <a href="/cart.html"><i class="iconfont icon-cart"></i>购物车(<span id="shoppingCartCount"><script type="text/javascript" src="/tools/submit_ajax.ashx?action=view_cart_count"></script></span>)</a>-->
+                                   <a href="/cart.html"><i class="iconfont icon-cart"></i>购物车(<span id="shoppingCartCount"><script type="text/javascript" src="/tools/submit_ajax.ashx?action=view_cart_count"></script></span>)</a>-->
                 </div>
             </div>
         </div>
         <div class="head-nav">
             <div class="section">
                 <!-- <div class="logo">
-                               <a href="/index.html"><img width="230px" height="70px" src="/templates/main/images/logo.png" /></a>
-                           </div>-->
+                                   <a href="/index.html"><img width="230px" height="70px" src="/templates/main/images/logo.png" /></a>
+                               </div>-->
                 <div id="menu2" class="nav-box menuhd">
                     <ul>
                         <li class="index">
-                            <a href="/index.html">
-                                首页
-                            </a>
+                            <!-- <a href="/index.html">
+                                    首页
+                                </a> -->
+                            <router-link :to="{name:'/'}">首页</router-link>
                         </li>
                         <li class="news">
                             <a href="/news.html">
@@ -50,9 +51,10 @@
                             </a>
                         </li>
                         <li>
-                            <a target="_blank" href="/admin/index.aspx">
-                                问题提交
-                            </a>
+                            <!-- <a target="_blank" href="/admin/index.aspx">
+                                    问题提交
+                                </a> -->
+                            <router-link :to="{name:'g'}">购物商城</router-link>
                         </li>
                     </ul>
                 </div>

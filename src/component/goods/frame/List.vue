@@ -72,7 +72,7 @@ export default {
             this.$http.get(this.$api.goodsContent).then(res => {
                 this.listData = res.data.message;
                 // console.log(res.data.message);
-                console.log(this.listData);
+                // console.log(this.listData);
             });
         }
     },

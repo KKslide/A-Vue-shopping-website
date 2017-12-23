@@ -45,7 +45,7 @@
 
 <script>
 export default {
-    props: ['tablename', 'artID'],
+    props: ['a', 'b'],
     data() {
         return {
             /* 评论框内容 */
@@ -62,7 +62,7 @@ export default {
     methods: {
         getCommentList() {
             this.$http.get(
-                this.$api.commentList + this.tablename + '/' + this.artID,
+                this.$api.commentList + this.a + '/' + this.b,
                 { params: this.query }
             ).then(res => {
                 this.commentList = res.data.message;
@@ -76,7 +76,7 @@ export default {
         },
         subComment() {
             this.$http.post(
-                this.$api.comment + this.tablename + '/' + this.artID,
+                this.$api.comment + this.a + '/' + this.b,
                 { commenttxt: this.commentContent }
             ).then(res => {
                 // 评论成功的提示

@@ -37,7 +37,7 @@
                                 <el-tab-pane label="商品评论">
                                     <div class="tab-content" style="display: block;">
                                         <!--网友评论    调用端口，具体参数看文档-->
-                                        <app-comment tablename="goods" :artID="id"></app-comment>
+                                        <app-comment a="goods" :b="id"></app-comment>
                                         <!--/网友评论-->
                                     </div>
                                 </el-tab-pane>
@@ -88,12 +88,20 @@ export default {
     methods: {
         getGoodsDetail() {
             this.$http.get(this.$api.goodsDetail + this.id).then(res => {
+        // console.log(this.$route);
                 this.goodsDetail = res.data.message;
             });
         }
     },
     created() {
         this.getGoodsDetail();
+    },
+    /* this is copy from DaFei...try to understand... */
+    watch: {
+        $route() {
+            this.id = this.$route.params.id;  // 修改为最新的id
+            this.getGoodsDetail();            // 重新请求数据更新页面内容
+        }
     },
     components: {
         appBreadcumb: BreadCumbComponent,

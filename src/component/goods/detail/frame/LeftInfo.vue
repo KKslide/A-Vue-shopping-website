@@ -26,7 +26,7 @@
                 <dt>购买数量</dt>
                 <dd>
                     <div class="stock-box">
-                        <el-input-number v-model="goodsNum" @change="handleChange" :min="1" :max="goodsinfo.stock_quantity" label="购买数量"></el-input-number>
+                        <el-input-number v-model="goodsNum" :min="1" :max="goodsinfo.stock_quantity" label="购买数量"></el-input-number>
                     </div>
                     <span class="stock-txt">
                         库存
@@ -38,7 +38,7 @@
                 <dd>
                     <div class="btn-buy" id="buyButton">
                         <button class="buy" onclick="cartAdd(this,'/',1,'/shopping.html');">立即购买</button>
-                        <button class="add" onclick="cartAdd(this,'/',0,'/cart.html');">加入购物车</button>
+                        <button class="add" @click="addShopcart">加入购物车</button>
                     </div>
                 </dd>
             </dl>
@@ -54,9 +54,15 @@ export default {
             goodsNum: 1
         }
     },
-    props:['goodsinfo'],
-    methods:{
-        handleChange(){}
+    props: ['goodsinfo'],
+    methods: {
+        /* 加入购物车功能 */
+        addShopcart() {
+            this.$store.commit('addShopcartData', {
+                id: this.$route.params.id,
+                val: this.goodsNum
+            });
+        }
     }
 }
 </script>

@@ -2,15 +2,11 @@ import Vue from 'vue';
 
 export default {
     state: {
-        shopcartData: {
-            // 92: 0
-        }
+        /* 初始值从localstorage取出 */
+        shopcartData: JSON.parse(localStorage.getItem('shopcartData')) || {}
     },
     /* 定义获取状态的方式 */
     getters: {
-        // shopcartTotal(state) {
-        //     return state.shopcartData;
-        // },
         /* 取出购物车原始数据 */
         getShopcartData(state) {
             return state.shopcartData;
@@ -30,6 +26,7 @@ export default {
         upShopCartData(state, params) {
             // state.shopcartData[params.id] = params.val;
             Vue.set(state.shopcartData, params.id, params.val);
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         },
         /* 累加 */
         addShopcartData(state, params) {
@@ -39,10 +36,12 @@ export default {
                 // state.shopcartData[params.id] = params.val;
                 Vue.set(state.shopcartData, params.id, params.val);
             }
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         },
         /* 删除数据---删除商品购买数据 */
         delShopcartData(state, params) {
             Vue.delete(state.shopcartData, params.id);
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         }
     }
 }

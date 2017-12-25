@@ -7,8 +7,7 @@
             </div>
             <div class="conn-box">
                 <div class="editor">
-                    <textarea v-model="commentContent" id="txtContent" name="txtContent" sucmsg=" " 
-                    datatype="*10-1000" nullmsg="请填写评论内容！"></textarea>
+                    <textarea v-model="commentContent" id="txtContent" name="txtContent" sucmsg=" " datatype="*10-1000" nullmsg="请填写评论内容！"></textarea>
                     <span class="Validform_checktip"></span>
                 </div>
                 <div class="subcon">
@@ -20,7 +19,7 @@
         </form>
         <ul id="commentList" class="list-box">
             <p v-if="!commentList.length" style="margin:5px 0 15px 69px;line-height:42px;text-align:center;border:1px solid #f7f7f7;">暂无评论，快来抢沙发吧！</p>
-            <li v-for="item in commentList" :key="item.id">
+            <li v-for="(item,i) in commentList" :key="i">
                 <div class="avatar-box">
                     <i class="iconfont icon-user-full"></i>
                 </div>
@@ -35,8 +34,8 @@
         </ul>
         <!--放置页码-->
         <div class="page-box" style="margin:5px 0 0 62px">
-
-            <el-pagination layout="prev, pager, next" :total="10*this.totalcount" @current-change="handleCurrentChange"> </el-pagination>
+            <!-- 分页 -->
+            <el-pagination layout="prev, pager, next" :total="10*this.totalcount" @current-change="handleCurrentChange"></el-pagination>
 
         </div>
         <!--/放置页码-->
@@ -71,8 +70,9 @@ export default {
             });
         },
         /* 更改当前页 */
-        handleCurrentChange() {
-            // this.pageIndex
+        handleCurrentChange(page) {
+            this.query.pageIndex = page;
+            this.getCommentList();
         },
         subComment() {
             this.$http.post(
@@ -95,6 +95,11 @@ export default {
             });
         },
 
+    },
+    watch: {
+        b() {
+            this.getCommentList();
+        }
     },
     created() {
         this.getCommentList();

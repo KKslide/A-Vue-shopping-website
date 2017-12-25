@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>caculator</title>
+    <style>
+        input {
+            display: inline-block;
+            width: 50px;
+            height: 35px;
+            /* border: 1px solid #666; */
+        }
+    </style>
+</head>
+
+<body>
+    <p>input two numbers</p>
+    <button>click</button><br><br>
+    <input type="text" class="a">+<input type="text" class="b">=<span class="c"></span>
+    <!-- <div class="c"></div> -->
+    <!-- <span></span> -->
+</body>
+
+</html>
+<script>
+    var a = document.querySelector('.a');
+    var b = document.querySelector('.b');
+    var c = document.querySelector('.c');
+    var btn = document.querySelector('button');
+
+    function getSum(a, b) {
+        return sum = a + b;
+    }
+    // c.innerHTML = getSum(a.val() + b.val());
+    btn.addEventListener('click', function() {
+        // alert(getSum(parseInt(a.value), parseInt(b.value)));
+        c.innerHTML = getSum(parseInt(a.value), parseInt(b.value));
+    });
+</script>

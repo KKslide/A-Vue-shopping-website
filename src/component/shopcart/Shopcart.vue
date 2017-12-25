@@ -46,7 +46,9 @@
                             <tbody>
                                 <tr>
                                     <th width="48" align="center">
-                                        <a>全选</a>
+                                        <!-- 全选 -->
+                                        <el-switch :value="allSelected" @change="allSelectedSwitch" active-color="#13ce66" inactive-color="#ff4949">
+                                        </el-switch>
                                     </th>
                                     <th align="left" colspan="2">商品信息</th>
                                     <th width="84" align="left">单价</th>
@@ -54,7 +56,36 @@
                                     <th width="104" align="left">金额(元)</th>
                                     <th width="54" align="center">操作</th>
                                 </tr>
-                                <tr>
+
+                                <!-- 卧槽。。居然不写商品列表 -->
+                                <!-- 商品列表在这里啊。。我日 -->
+                                <tr v-for="item in goodsList" :key="item.id">
+                                    <td width="48" align="center">
+                                        <el-switch v-model="item.selected" active-color="#13ce66" inactive-color="#ff4949">
+                                        </el-switch>
+                                    </td>
+                                    <td align="left" colspan="2">
+                                        <img :src="item.img_url" width="50" height="50">
+                                        <span>{{item.title}}</span>
+                                    </td>
+                                    <td width="84" align="left">
+                                        ￥{{item.sell_price}}
+                                    </td>
+                                    <!-- 数量加减 -->
+                                    <td width="104" align="center">
+                                        <el-input-number size="mini" v-model="item.buycount" @change="countChange(item.id,$event)" :min="1"></el-input-number>
+                                    </td>
+                                    <!--  -->
+                                    <td width="104" align="left">
+                                        ￥{{item.sell_price*item.buycount}}
+                                    </td>
+                                    <td width="54" align="center">
+                                        <!-- native是原生事件的意思，要添加才能触发事件，不然会跳转 -->
+                                        <el-button size="mini" @click.native="delGoods(item.id)">删除</el-button>
+                                    </td>
+                                </tr>
+
+                                <tr v-if="!goodsList.length">
                                     <td colspan="10">
                                         <div class="msg-tips">
                                             <div class="icon warning">
@@ -68,17 +99,18 @@
                                         </div>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <th align="right" colspan="8">
                                         已选择商品
-                                        <b class="red" id="totalQuantity">0</b> 件 &nbsp;&nbsp;&nbsp; 商品总金额（不含运费）：
+                                        <b class="red" id="totalQuantity">{{selectedCount}}</b> 件 &nbsp;&nbsp;&nbsp; 商品总金额（不含运费）：
                                         <span class="red">￥</span>
-                                        <b class="red" id="totalAmount">0</b>元
+                                        <b class="red" id="totalAmount">{{selectedTotalPrice}}</b>元
                                     </th>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>,
                     <!--/商品列表-->
                     <!--购物车底部-->
                     <div class="cart-foot clearfix">
@@ -99,20 +131,64 @@ export default {
     data() {
         return {
             // key: value
-            goodIDS:[]
+            goodsList: []
+        }
+    },
+    computed: {
+        /* 选中的商品 */
+        selectedCount() {
+            return this.goodsList.reduce((s, v) => v.selected ? s + v.buycount : s, 0);
+        },
+        /* 计算商品总价 */
+        selectedTotalPrice() {
+            return this.goodsList.reduce((s, v) => v.selected ? s + v.buycount * v.sell_price : s, 0);
+        },
+        /* 购物列表全选的状态 */
+        allSelected() {
+            return this.goodsList.every(v => v.selected);
         }
     },
     methods: {
-        getShopcartData() {
-            this.$http.get(this.$api.shopcarGoods,).then(res => console.log(res));
+        /* 全选开关 */
+        allSelectedSwitch(bol) {
+            this.goodsList.forEach(v => v.selected = bol);
         },
-        getIDS(){
-            console.log(this.$store.getters.getShopcartIDS);
+        /* 获取已购买的商品列表 */
+        getGoodsList() {
+            if (!this.$store.getters.getShopcartIDS) {
+                console.log('no data');
+            } else {
+                /* 通过IDS获取商品列表 */
+                this.$http.get(this.$api.shopcarGoods + this.$store.getters.getShopcartIDS)
+                    // .then(res => this.goodsList = res.data.message)
+                    .then(res => {
+                        res.data.message.forEach(goods => {
+                            /* 修正一下返回数据的成员，添加selected用于控制开关 */
+                            goods.selected = true;
+                            /* 因为返回值的购买数量buycount不正确，手动添加buycount购买数量 */
+                            goods.buycount = this.$store.getters.getShopcartData[goods.id];
+                        });
+                        /* 重置填充数据列表 */
+                        this.goodsList = res.data.message;
+                    });
+            }
+
+        },
+        /* 数量加减框发生变化触发，传入参数id和val */
+        countChange(id, val) {
+            /* 下面的id和val从哪来?? */
+            this.$store.commit('upShopCartData', { id: id, val: val })
+        },
+        /* 删除操作 */
+        delGoods(id) {
+            this.$store.commit('delShopcartData', { id: id });
+            // this.getGoodsList();
+            this.goodsList = this.goodsList.filter(v => v.id != id); // 留下不删除的商品
         }
+
     },
     created() {
-        // this.getShopcartData();
-        this.getIDS();
+        this.getGoodsList();
     }
 }
 </script>

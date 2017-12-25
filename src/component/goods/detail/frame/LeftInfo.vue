@@ -63,6 +63,12 @@ export default {
                 val: this.goodsNum
             });
         }
+    },
+    /* 切换不同商品，购买数量初始化为0 */
+    watch: {
+        $route() {
+            this.goodsNum = 1;
+        }
     }
 }
 </script>

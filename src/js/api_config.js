@@ -1,6 +1,7 @@
 /* 不在教室时用这个域名 */
 // export const domain = "http://172.16.2.23:9095/";
-export const domain = "http://157.122.54.189:9095/";
+// export const domain = "http://157.122.54.189:9095/";
+export const domain = "http://127.0.0.1:8899/";
 
 export default {
     // 账号管理

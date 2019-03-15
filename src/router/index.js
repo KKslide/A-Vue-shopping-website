@@ -10,8 +10,9 @@ import GoodsMoreComponent from '../components/goods/more/GoodsMore.vue'
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/goods', component: GoodsHomeComponent },
-    { path: '/goods/detail/:id', component: GoodsDetailComponent },
-    { path: '/goods/more', component: GoodsMoreComponent }
+    { path: '/', redirect: '/goods' },
+    { name: 'g', path: '/goods', component: GoodsHomeComponent },
+    { name: 'gd', path: '/goods/detail/:id', component: GoodsDetailComponent },
+    { name: 'gm', path: '/goods/more', component: GoodsMoreComponent }
   ]
 })

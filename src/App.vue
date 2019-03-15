@@ -1,14 +1,20 @@
 <template>
-  <app-header></app-header>
+  <div id="app">
+    <app-header></app-header>
+    <router-view></router-view>
+    <app-footer></app-footer>
+  </div>
 </template>
 
 <script>
-import HeaderComponent from './components/frame/Header'
+import HeaderComponent from './components/frame/Header' // 头部组件
+import FooterComponent from './components/frame/Footer' //底部组件
 import $ from 'jquery'
 export default {
   name: 'App',
   components: {
-    appHeader: HeaderComponent
+    appHeader: HeaderComponent,
+    appFooter: FooterComponent
   },
   mounted() {
     $("#menu2 li a").wrapInner('<span class="out"></span>');

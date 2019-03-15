@@ -22,11 +22,12 @@
                       <router-link :to="{name:'gd',params:{id:item.id}}">{{item.title}}</router-link>
                     </dt>
                     <dd>
-                      <router-link
+                      <!-- <router-link
                         v-for="subitem in item.subcates"
                         :key="subitem.id"
                         :to="{name:'gd',params:{id:item.id}}"
-                      >{{item.title}}</router-link>
+                      >{{item.title}}</router-link>-->
+                      <app-menu :menu="item.subcates"></app-menu>
                     </dd>
                   </dl>
                 </div>
@@ -39,7 +40,11 @@
         <div class="left-705">
           <div class="banner-img">
             <el-carousel indicator-position="outside">
-              <el-carousel-item v-for="item in topData.sliderlist" :key="item.id" :style="{'background-image':'url('+item.img_url+')'}">
+              <el-carousel-item
+                v-for="item in topData.sliderlist"
+                :key="item.id"
+                :style="{'background-image':'url('+item.img_url+')'}"
+              >
                 <!-- <img :src="item.img_url"> -->
               </el-carousel-item>
             </el-carousel>
@@ -50,26 +55,18 @@
         <div class="left-220">
           <div class="side-img-list">
             <ul>
-              <li>
+              <!-- 循环渲染推荐商品 -->
+              <li v-for="(item,index) in topData.toplist" :key="item.id">
                 <div class="img-box">
-                  <label>1</label>
-                  <img src="/upload/201504/20/thumb_201504200314272543.jpg">
+                  <label v-html="index+1"></label>
+                  <img :src="item.img_url">
                 </div>
                 <div class="txt-box">
-                  <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a>
-                  <span>2015-04-20</span>
+                  <router-link :to="{name:'gd',params:{id:item.id}}">{{item.title}}</router-link>
+                  <span>{{item.add_time | date}}</span>
                 </div>
               </li>
-              <li>
-                <div class="img-box">
-                  <label>2</label>
-                  <img src="/upload/201504/20/thumb_201504200258403759.jpg">
-                </div>
-                <div class="txt-box">
-                  <a href="/goods/show-97.html">三星（SAMSUNG）UA40HU5920JXXZ 40英寸4K超高清</a>
-                  <span>2015-04-20</span>
-                </div>
-              </li>
+              <!-- 循环渲染推荐商品 -->
             </ul>
           </div>
         </div>
@@ -80,6 +77,7 @@
 </template>
 
 <script>
+import MenuComponent from './Menu.vue'
 export default {
   data() {
     return {
@@ -89,6 +87,9 @@ export default {
         toplist: []
       }
     }
+  },
+  components: {
+    appMenu: MenuComponent
   },
   methods: {
     getTopData() {
@@ -105,10 +106,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-.el-carousel__item{
-    background-position: center;
-    background-size: contain;
-    background-repeat: repeat-x;
+.el-carousel__item {
+  background-position: center;
+  background-size: contain;
+  background-repeat: repeat-x;
 }
 .el-carousel__item h3 {
   color: #475669;

@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App'
 import router from './router'
 // 引入element-ui
@@ -17,6 +18,8 @@ import Filters from './filter'
 Vue.use(ElementUI)
 Vue.use(Filters)
 
+Vue.use(Vuex)
+
 // 把这些配置都挂在到原型上,方便以后调用
 Vue.prototype.$http = axios
 Vue.prototype.$api = api
@@ -28,5 +31,20 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store: new Vuex.Store({
+    state: {
+      shopCarTotal: 0
+    },
+    getters: {
+      shopCarTotal(state) {
+        return state.shopCarTotal
+      }
+    },
+    mutations: {
+      addShopCarTotal(state, numbers) {
+        state.shopCarTotal += numbers
+      }
+    }
+  })
 })

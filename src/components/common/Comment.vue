@@ -32,7 +32,7 @@
     <ul id="commentList" class="list-box">
       <p v-if="!commentList.length">暂无评论，快来抢沙发吧！</p>
       <!-- 具体评论 -->
-      <li v-for="item in commentList" :key="item.add_time">
+      <li v-for="(item, i) in commentList" :key="i">
         <div class="avatar-box">
           <i class="iconfont icon-user-full"></i>
         </div>
@@ -81,6 +81,11 @@ export default {
   },
   created() {
     this.getComment();
+  },
+  watch:{
+    artID(){
+      this.getComment();
+    }
   }
 };
 </script>

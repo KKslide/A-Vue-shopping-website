@@ -21,7 +21,13 @@
       </dl>
     </div>
     <div class="spec-box">
-      <el-input-number v-model="goodsCount" @change="handleChange" :min="1" :max="goodsinfo.stock_quantity" label="购买数量"></el-input-number>
+      <el-input-number
+        v-model="goodsCount"
+        @change="addShopCar"
+        :min="1"
+        :max="goodsinfo.stock_quantity"
+        label="购买数量"
+      ></el-input-number>
     </div>
   </div>
 </template>
@@ -35,9 +41,9 @@ export default {
     }
   },
   methods: {
-      handleChange(){
-
-      }
+    addShopCar() {
+      this.$store.commit('addShopCarTotal', this.goodsCount)
+    }
   }
 }
 </script>

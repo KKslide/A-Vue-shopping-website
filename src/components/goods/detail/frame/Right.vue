@@ -4,10 +4,10 @@
     <ul class="side-img-list">
       <li v-for="(item, i) in hotgoodslist" :key="item.id">
         <div class="img-box">
-          <a href="/goods/show-98.html">
+          <router-link :to="{name:'gd',params:{id:item.id}}">
             <label>{{ i + 1 }}</label>
             <img :src="item.img_url">
-          </a>
+          </router-link>
         </div>
         <div class="txt-box">
           <router-link :to="{ name: 'gd', params: { id: item.id } }">{{ item.title }}</router-link>

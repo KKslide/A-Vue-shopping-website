@@ -23,7 +23,11 @@
             <div id="goodsTabs" class="goods-tab bg-wrap">
               <el-tabs type="border-card">
                 <el-tab-pane label="商品介绍">
-                  <div class="tab-content entry" v-html="detailData.goodsinfo.content" style="display:block;"></div>
+                  <div
+                    class="tab-content entry"
+                    v-html="detailData.goodsinfo.content"
+                    style="display:block;"
+                  ></div>
                 </el-tab-pane>
                 <el-tab-pane label="商品评论">
                   <div class="tab-conetnt" style="display:block;">
@@ -34,15 +38,13 @@
               </el-tabs>
             </div>
             <!-- 选项卡 -->
-            
           </div>
           <!-- 页面左边 -->
-
           <!-- 页面右边 -->
           <div class="left-220">
-              <div class="bg-wrap nobg">
-                  <app-right :hotgoodslist="detailData.hotgoodslist"></app-right>
-              </div>
+            <div class="bg-wrap nobg">
+              <app-right :hotgoodslist="detailData.hotgoodslist"></app-right>
+            </div>
           </div>
           <!-- 页面右边 -->
         </div>
@@ -73,7 +75,7 @@ export default {
     appLeftImg: LeftImgComponent,
     appLeftInfo: LeftInfoComponent,
     appRight: RightComponent,
-    appComment:CommentComponent
+    appComment: CommentComponent
   },
   methods: {
     getGoodsDetailData() {
@@ -85,7 +87,14 @@ export default {
   },
   created() {
     this.getGoodsDetailData();
-  }
+  },
+  // 监听路由变化
+  watch: {
+    $route() {
+      this.id = this.$route.params.id;  // 修改为最新的id
+      this.getGoodsDetailData();            // 重新请求数据更新页面内容
+    }
+  },
 }
 </script>
 

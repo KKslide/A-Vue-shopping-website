@@ -14,6 +14,7 @@
       <div class="conn-box">
         <div class="editor">
           <textarea
+            v-model="commentContent"
             id="txtContent"
             name="txtContent"
             sucmsg=" "
@@ -29,31 +30,19 @@
       </div>
     </form>
     <ul id="commentList" class="list-box">
-      <p
-        style="margin:5px 0 15px 69px;line-height:42px;text-align:center;border:1px solid #f7f7f7;"
-      >暂无评论，快来抢沙发吧！</p>
-      <li>
+      <p v-if="!commentList.length">暂无评论，快来抢沙发吧！</p>
+      <!-- 具体评论 -->
+      <li v-for="item in commentList" :key="item.add_time">
         <div class="avatar-box">
           <i class="iconfont icon-user-full"></i>
         </div>
         <div class="inner-box">
           <div class="info">
-            <span>匿名用户1111</span>
-            <span>2017/10/23 14:58:59</span>
+            <span>{{ item.user_name }}</span>
+            <span>{{ item.user_ip }}</span>
+            <span>{{ item.add_time | date }}</span>
           </div>
-          <p>testtesttest</p>
-        </div>
-      </li>
-      <li>
-        <div class="avatar-box">
-          <i class="iconfont icon-user-full"></i>
-        </div>
-        <div class="inner-box">
-          <div class="info">
-            <span>匿名用户22</span>
-            <span>2017/10/23 14:59:36</span>
-          </div>
-          <p>很清晰调动单很清晰调动单</p>
+          <p>{{ item.content }}</p>
         </div>
       </li>
     </ul>
@@ -70,8 +59,39 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      commentContent: '', // 绑定用户要发表的评论内容
+      commentList: [], // 接收评论数据
+      query: { // 分页参数
+        pageIndex: 1,
+        pageSize: 5
+      }
+    }
+  },
+  props: ['tablename', 'artID'],
+  methods: {
+    getComment() {
+      this.$http.get(this.$api.commentList + this.tablename + '/' + this.artID, { params: this.query })
+        .then(res => {
+          this.commentList = res.data.message
+        })
+    }
+  },
+  created() {
+    this.getComment();
+  }
+};
 </script>
 
-<style scoped>
+<style scoped lang="less">
+#commentList {
+  > p {
+    margin: 5px 0 15px 69px;
+    line-height: 42px;
+    text-align: center;
+    border: 1px solid #f7f7f7;
+  }
+}
 </style> 

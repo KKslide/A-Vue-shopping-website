@@ -21,32 +21,19 @@
 
             <!-- 选项卡 -->
             <div id="goodsTabs" class="goods-tab bg-wrap">
-              <div
-                id="tabHead"
-                class="tab-head"
-                style="position: static; top: 517px; width: 925px;"
-              >
-                <ul>
-                  <li>
-                    <a href="javascript:;">商品介绍</a>
-                  </li>
-                  <li>
-                    <a href="javascript:;">商品评论</a>
-                  </li>
-                </ul>
-              </div>
+              <el-tabs type="border-card">
+                <el-tab-pane label="商品介绍">
+                  <div class="tab-content entry" v-html="detailData.goodsinfo.content" style="display:block;"></div>
+                </el-tab-pane>
+                <el-tab-pane label="商品评论">
+                  <div class="tab-conetnt" style="display:block;">
+                    <!-- 评论模块 -->
+                    <app-comment tablename="goods" :artID="id"></app-comment>
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
             </div>
             <!-- 选项卡 -->
-
-            <!-- 选项内容 -->
-            <div class="tab-content entry" style="display:blok">内容</div>
-            <div class="tab-content" style="display:blok">
-                <!-- 网友评论 -->
-                <app-comment></app-comment>
-                <!-- 网友评论 -->
-            </div>
-            <!-- 选项内容 -->
-
             
           </div>
           <!-- 页面左边 -->

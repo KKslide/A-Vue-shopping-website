@@ -22,11 +22,6 @@
                       <router-link :to="{name:'gd',params:{id:item.id}}">{{item.title}}</router-link>
                     </dt>
                     <dd>
-                      <!-- <router-link
-                        v-for="subitem in item.subcates"
-                        :key="subitem.id"
-                        :to="{name:'gd',params:{id:item.id}}"
-                      >{{item.title}}</router-link>-->
                       <app-menu :menu="item.subcates"></app-menu>
                     </dd>
                   </dl>
@@ -45,7 +40,7 @@
                 :key="item.id"
                 :style="{'background-image':'url('+item.img_url+')'}"
               >
-                <!-- <img :src="item.img_url"> -->
+                <router-link :to="{name:'gd',params:{id:item.id}}" style="display:inline-block;width:100%;height:100%;"></router-link>
               </el-carousel-item>
             </el-carousel>
           </div>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export default {
     state: {
-        shopcartData: {}
+        shopcartData: JSON.parse(localStorage.getItem('shopcartData'))||{}
     },
     getters: {
         getShopcartData(state) {
@@ -18,6 +18,7 @@ export default {
     mutations: {
         upShopcartData(state, params) {
             Vue.set(state.shopcartData, params.id, params.val)
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         },
         addShopcartData(state, params) {
             if (state.shopcartData[params.id]) {
@@ -25,9 +26,11 @@ export default {
             } else {
                 Vue.set(state.shopcartData, params.id, params.val)
             }
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         },
         delShopcartData(state, params) {
             Vue.delete(state.shopcartData, params.id)
+            localStorage.setItem('shopcartData', JSON.stringify(state.shopcartData));
         }
     }
 }

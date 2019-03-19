@@ -60,6 +60,11 @@ export default {
         val: this.goodsCount
       })
     }
+  },
+  watch: {
+    $route() {
+      this.goodsCount = 1;
+    }
   }
 }
 </script>

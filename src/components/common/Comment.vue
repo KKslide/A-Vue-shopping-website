@@ -2,12 +2,7 @@
   <!-- 对所有页面开发的公共评论组件 -->
   <div class="comment-box">
     <!--取得评论总数-->
-    <form
-      id="commentForm"
-      name="commentForm"
-      class="form-box"
-      url="/tools/submit_ajax.ashx?action=comment_add&amp;channel_id=2&amp;article_id=98"
-    >
+    <form id="commentForm" name="commentForm" class="form-box" @submit.prevent="submitComment">
       <div class="avatar-box">
         <i class="iconfont icon-user-full"></i>
       </div>
@@ -24,7 +19,7 @@
           <span class="Validform_checktip"></span>
         </div>
         <div class="subcon">
-          <input id="btnSubmit" name="submit" type="submit" value="提交评论" class="submit">
+          <button id="btnSubmit" name="submit" type="submit" class="submit">提交评论</button>
           <span class="Validform_checktip"></span>
         </div>
       </div>
@@ -48,11 +43,16 @@
     </ul>
     <!--放置页码-->
     <div class="page-box" style="margin:5px 0 0 62px">
-      <div id="pagination" class="digg">
-        <span class="disabled">« 上一页</span>
-        <span class="current">1</span>
-        <span class="disabled">下一页 »</span>
-      </div>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="query.pageIndex"
+        :page-sizes="[4, 6, 8, 10]"
+        :page-size="query.pageSize"
+        layout="total, prev, pager, next, jumper"
+        :total="totalcount"
+        background
+      ></el-pagination>
     </div>
     <!--/放置页码-->
   </div>
@@ -66,24 +66,55 @@ export default {
       commentList: [], // 接收评论数据
       query: { // 分页参数
         pageIndex: 1,
-        pageSize: 5
-      }
+        pageSize: 3
+      },
+      totalcount: 0
     }
   },
   props: ['tablename', 'artID'],
   methods: {
+    handleCurrentChange(page) { // 跳页
+      this.query.page = page;
+      this.getComment;
+    },
+    handleSizeChange(size) { // 改变尺码
+      this.query.size = size;
+      this.getComment();
+    },
+    submitComment() { // 提交评论
+      this.$http.post(this.$api.comment + this.tablename + '/' + this.artID, { commenttxt: this.commentContent })
+        .then(res => {
+          console.log(res);
+          // 评论成功的提示
+          this.$message({
+            message: '恭喜你，发表成功',
+            type: 'success'
+          });
+          // 评论成功后应该更新整个评论列表, 我们这里直接手动创建一条评论对象,
+          // unshift到评论列表的最前面, 这样省去了一个接口的请求
+          this.commentList.unshift({
+            user_name: '匿名用户',
+            user_ip: '127.0.0.1',
+            add_time: new Date(),
+            content: this.commentContent
+          });
+          this.commentContent = '';
+          this.totalcount++;
+        })
+    },
     getComment() {
       this.$http.get(this.$api.commentList + this.tablename + '/' + this.artID, { params: this.query })
         .then(res => {
           this.commentList = res.data.message
+          this.totalcount = res.data.totalcount
         })
     }
   },
   created() {
     this.getComment();
   },
-  watch:{
-    artID(){
+  watch: {
+    artID() {
       this.getComment();
     }
   }

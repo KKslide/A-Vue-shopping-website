@@ -12,10 +12,12 @@
           <a href="/register.html">注册</a>
           <strong>|</strong>
           <!-- <a href="/content/contact.html"><i class="iconfont icon-phone"></i>联系我们</a> -->
-          <a href="/cart.html">
-            <i class="iconfont icon-cart"></i>购物车(<span id="shoppingCartCount">{{$store.getters.shopCarTotal}}</span>)
+          <!-- <a href="/cart.html"> -->
+          <router-link :to="{name:'sc'}">
+            <i class="iconfont icon-cart"></i>购物车(<span id="shoppingCartCount">{{$store.getters.getShopcartTotal}}</span>)
+          </router-link>
             <!-- <i class="iconfont icon-cart"></i>购物车(<span id="shoppingCartCount">0</span>) -->
-          </a>
+          <!-- </a> -->
         </div>
       </div>
     </div>

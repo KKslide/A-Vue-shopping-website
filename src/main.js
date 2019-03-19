@@ -15,6 +15,8 @@ import axios from './axios/axios_config'
 
 import Filters from './filter'
 
+import storeConfig from './store' // 引入store配置
+
 Vue.use(ElementUI)
 Vue.use(Filters)
 
@@ -32,19 +34,5 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  store: new Vuex.Store({
-    state: {
-      shopCarTotal: 0
-    },
-    getters: {
-      shopCarTotal(state) {
-        return state.shopCarTotal
-      }
-    },
-    mutations: {
-      addShopCarTotal(state, numbers) {
-        state.shopCarTotal += numbers
-      }
-    }
-  })
+  store: new Vuex.Store(storeConfig)
 })
